@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Mon Site{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue sur mon site</h1>
+        
+        {% if user.is_authenticated %}
+          <p>Bienvenue, {{ user.username }} | <a href="{% url 'create_activity' %}">Créer une activité</a> | <a href="{% url 'logout' %}">Se déconnecter</a></p>
+        {% else %}
+          <p><a href="{% url 'login' %}">Se connecter</a></p>
+        {% endif %}
+        
+        <nav>
+            <ul>
+                <li><a href="{% url 'activite_list' %}">Liste des activités</a></li>
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'create_activity' %}">Créer une activité</a></li>
+                    <li><a href="{% url 'logout' %}">Se déconnecter</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Se connecter</a></li>
+                    <li><a href="{% url 'signup' %}">S'inscrire</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

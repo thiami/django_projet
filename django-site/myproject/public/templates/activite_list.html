@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des activités</title>
+</head>
+<body>
+    <h1>Liste des activités</h1>
+    <ul>
+        {% for activite in activites %}
+            <li>
+                {{ activite.nom }} à {{ activite.ville.nom }} le {{ activite.date }} 
+                - <a href="{% url 'register_for_activity' activite.id %}">S'inscrire</a>
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
