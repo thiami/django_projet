@@ -1,26 +1,31 @@
-{% extends 'base_generic.html' %}
+{% extends 'base.html' %}
+
+{% block title %}Créer une Activité{% endblock %}
 
 {% block content %}
-  <h2>Créer une activité</h2>
-  <form method="post">
-    {% csrf_token %}
-    <label for="nom">Nom:</label>
-    <input type="text" id="nom" name="nom" required>
-    
-    <label for="ville">Ville:</label>
-    <select id="ville" name="ville" required>
-      {% for ville in villes %}
-      <option value="{{ ville.id }}">{{ ville.nom }}</option>
-      {% endfor %}
-    </select>
-    
-    <label for="type">Type:</label>
-    <select id="type" name="type" required>
-      {% for type in types %}
-      <option value="{{ type.id }}">{{ type.type }}</option>
-      {% endfor %}
-    </select>
-    
-    <button type="submit">Créer l'activité</button>
-  </form>
+    <h2>Créer une nouvelle activité</h2>
+    <form method="post">
+        {% csrf_token %}
+        <label for="nom">Nom de l'activité:</label>
+        <input type="text" id="nom" name="nom" required><br>
+
+        <label for="ville">Ville:</label>
+        <select id="ville" name="ville" required>
+            {% for ville in villes %}
+                <option value="{{ ville.id }}">{{ ville.nom }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="type">Type d'activité:</label>
+        <select id="type" name="type" required>
+            {% for type in types %}
+                <option value="{{ type.id }}">{{ type.type}}</option>
+            {% empty %}
+                <option value="">Aucun type d'activité disponible</option>
+            {% endfor %}
+        </select><br>
+        <label for="date">Date de l'activité:</label>
+        <input type="datetime-local" id="date" name="date" required><br>
+        <button type="submit">Créer</button>
+    </form>
 {% endblock %}

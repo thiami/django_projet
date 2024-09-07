@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Inscription à {{ activite.nom }}</title>
-</head>
-<body>
-    <h1>Inscription à {{ activite.nom }}</h1>
+{% extends 'base.html' %}
+
+{% block title %}Inscription à une Activité{% endblock %}
+
+{% block content %}
+    <h2>S'inscrire à {{ activite.nom }}</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
         <button type="submit">S'inscrire</button>
     </form>
-</body>
-</html>
+{% endblock %}

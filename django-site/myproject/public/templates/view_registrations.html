@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Liste des Inscrits{% endblock %}
+
+{% block content %}
+    <h2>Inscrits pour l'activité: {{ activite.nom }}</h2>
+    <p><strong>Créateur:</strong> {{ activite.createur.username }}</p>
+    <p><strong>Date de l'activité:</strong> {{ activite.date|date:"d M Y H:i" }}</p>
+
+    <h3>Liste des inscrits</h3>
+    <ul>
+        {% for registration in registrations %}
+            <li>{{ registration.user.username }} - Inscrit le {{ registration.date|date:"d M Y H:i" }}</li>
+        {% empty %}
+            <li>Aucun inscrit pour cette activité.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

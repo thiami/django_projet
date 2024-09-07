@@ -1,17 +1,34 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Liste des activités</title>
-</head>
-<body>
-    <h1>Liste des activités</h1>
-    <ul>
-        {% for activite in activites %}
-            <li>
-                {{ activite.nom }} à {{ activite.ville.nom }} le {{ activite.date }} 
-                - <a href="{% url 'register_for_activity' activite.id %}">S'inscrire</a>
-            </li>
-        {% endfor %}
-    </ul>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Liste des Activités{% endblock %}
+
+{% block content %}
+    <h2>Liste des Activités par Type</h2>
+
+    {% for type_activite in types_activites %}
+        <h3>{{ type_activite.type }}</h3>
+        <ul>
+            {% for activite in type_activite.activite_set.all %}
+                <li>
+                    <strong>{{ activite.nom }}</strong>
+                    - Créateur: {{ activite.createur.username }}
+                    - Date: {{ activite.date|date:"d M Y H:i" }}
+                    - Inscrits: {{ activite.registration_set.count }} <!-- Nombre d'inscriptions -->
+                    
+                    <!-- Lien d'inscription -->
+                    {% if user.is_authenticated %}
+                        {% if user == activite.createur %}
+                            - <a href="{% url 'view_registrations' activite.id %}">Voir les inscrits</a>
+                        {% else %}
+                            - <a href="{% url 'register_for_activity' activite.id %}">S'inscrire</a>
+                        {% endif %}
+                    {% else %}
+                        - <a href="{% url 'login' %}">Connectez-vous pour vous inscrire</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <p>Aucune activité pour ce type.</p>
+            {% endfor %}
+        </ul>
+    {% endfor %}
+{% endblock %}
