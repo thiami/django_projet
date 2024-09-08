@@ -16,6 +16,9 @@
             {% endfor %}
         </select><br>
 
+        <label for="id_adresse">Adresse:</label>
+        <input type="text" name="adresse" id="id_adresse">
+        
         <label for="type">Type d'activité:</label>
         <select id="type" name="type" required>
             {% for type in types %}

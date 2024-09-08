@@ -3,22 +3,48 @@
 {% block title %}Liste des Activités{% endblock %}
 
 {% block content %}
-    <h2>Liste des Activités par Type</h2>
+    <h2>Filtrer les Activités</h2>
 
-    {% for type_activite in types_activites %}
-        <h3>{{ type_activite.type }}</h3>
+    <form method="get" action="{% url 'activite_list' %}">
+        <label for="ville">Ville:</label>
+        <select id="ville" name="ville" onchange="this.form.submit()">
+            <option value="">Toutes les villes</option>
+            {% for ville in villes %}
+                <option value="{{ ville.id }}" {% if ville.id|stringformat:"s" == selected_ville %}selected{% endif %}>
+                    {{ ville.nom }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="type">Type d'activité:</label>
+        <select id="type" name="type" onchange="this.form.submit()">
+            <option value="">Tous les types</option>
+            {% for type in types_activites %}
+                <option value="{{ type.id }}" {% if type.id|stringformat:"s" == selected_type %}selected{% endif %}>
+                    {{ type.type }}
+                </option>
+            {% endfor %}
+        </select>
+    </form>
+
+    <h2>Liste des Activités</h2>
+
+    {% if activites %}
         <ul>
-            {% for activite in type_activite.activite_set.all %}
+            {% for activite in activites %}
                 <li>
                     <strong>{{ activite.nom }}</strong>
+                    - Ville: {{ activite.ville.nom }}
+                    - Type: {{ activite.type.type }}
+                    - Adresse: {{ activite.adresse }}  <!-- Afficher l'adresse -->
                     - Créateur: {{ activite.createur.username }}
                     - Date: {{ activite.date|date:"d M Y H:i" }}
-                    - Inscrits: {{ activite.registration_set.count }} <!-- Nombre d'inscriptions -->
+                    - Inscrits: {{ activite.registration_set.count }}
                     
-                    <!-- Lien d'inscription -->
                     {% if user.is_authenticated %}
                         {% if user == activite.createur %}
                             - <a href="{% url 'view_registrations' activite.id %}">Voir les inscrits</a>
+                            - <a href="{% url 'delete_activity' activite.id %}">Supprimer</a>
                         {% else %}
                             - <a href="{% url 'register_for_activity' activite.id %}">S'inscrire</a>
                         {% endif %}
@@ -26,9 +52,9 @@
                         - <a href="{% url 'login' %}">Connectez-vous pour vous inscrire</a>
                     {% endif %}
                 </li>
-            {% empty %}
-                <p>Aucune activité pour ce type.</p>
             {% endfor %}
         </ul>
-    {% endfor %}
+    {% else %}
+        <p>Aucune activité ne correspond à vos critères.</p>
+    {% endif %}
 {% endblock %}

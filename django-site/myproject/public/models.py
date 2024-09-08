@@ -20,7 +20,7 @@ class Activite(models.Model):
     ville = models.ForeignKey(Ville, on_delete=models.CASCADE)
     type = models.ForeignKey(TypeActivite, on_delete=models.CASCADE)
     date = models.DateTimeField()
-
+    adresse = models.CharField(max_length=280, null=True)
     def __str__(self):
         return self.nom
 
