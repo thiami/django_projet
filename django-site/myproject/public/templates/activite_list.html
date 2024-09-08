@@ -36,17 +36,17 @@
                     <strong>{{ activite.nom }}</strong>
                     - Ville: {{ activite.ville.nom }}
                     - Type: {{ activite.type.type }}
-                    - Adresse: {{ activite.adresse }}  <!-- Afficher l'adresse -->
+                    - Adresse: {{ activite.adresse }}  
                     - Créateur: {{ activite.createur.username }}
                     - Date: {{ activite.date|date:"d M Y H:i" }}
                     - Inscrits: {{ activite.registration_set.count }}
                     
                     {% if user.is_authenticated %}
                         {% if user == activite.createur %}
-                            - <a href="{% url 'view_registrations' activite.id %}">Voir les inscrits</a>
-                            - <a href="{% url 'delete_activity' activite.id %}">Supprimer</a>
+                            - <a href="{% url 'inscription_activite_list' activite.id %}">Voir les inscrits</a>
+                            - <a href="{% url 'supprimer_activite' activite.id %}">Supprimer</a>
                         {% else %}
-                            - <a href="{% url 'register_for_activity' activite.id %}">S'inscrire</a>
+                            - <a href="{% url 'inscription_activite' activite.id %}">S'inscrire</a>
                         {% endif %}
                     {% else %}
                         - <a href="{% url 'login' %}">Connectez-vous pour vous inscrire</a>

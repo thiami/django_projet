@@ -10,7 +10,7 @@
     <header>
         <h1>Bienvenue sur Collabo, la plateforme dédiée aux suggestions et inscriptions pour des activités dans votre ville.</h1>
         {% if user.is_authenticated %}
-            <p>Bienvenue, {{ user.username }} | <a href="{% url 'create_activity' %}">Créer une activité</a> | <a href="{% url 'activite_list' %}">Voir la liste des activités</a> 
+            <p>Bienvenue, {{ user.username }} | <a href="{% url 'creer_activite' %}">Créer une activité</a> | <a href="{% url 'activite_list' %}">Voir la liste des activités</a> 
                 <form method="post" action="{% url 'logout' %}">
                 {% csrf_token %}
                 <button type="submit">Déconnexion</button>

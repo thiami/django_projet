@@ -7,11 +7,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name='index'),
     path('activites/', views.activite_list, name='activite_list'),
-    path('register/<int:activite_id>/', views.register_for_activity, name='register_for_activity'),
-    path('create/', views.create_activity, name='create_activity'),
-    path('accounts/', include('django.contrib.auth.urls')),  # Pour la gestion des comptes utilisateurs
-    #path('registrations/<int:activite_id>/', views.view_registrations, name='view_registrations'),
-    path('activity/<int:activite_id>/registrations/', views.view_registrations, name='view_registrations'),
-    path('activity/<int:activite_id>/delete/', views.delete_activity, name='delete_activity'),
+    path('register/<int:activite_id>/', views.inscription_activite, name='inscription_activite'),
+    path('create/', views.creer_activite, name='creer_activite'),
+    path('accounts/', include('django.contrib.auth.urls')), 
+    path('activity/<int:activite_id>/registrations/', views.inscription_activite_list, name='inscription_activite_list'),
+    path('activity/<int:activite_id>/delete/', views.supprimer_activite, name='supprimer_activite'),
    
 ]
