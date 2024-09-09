@@ -1,4 +1,3 @@
-# myproject/urls.py
 from django.contrib import admin
 from django.urls import path, include
 from public import views
@@ -10,7 +9,7 @@ urlpatterns = [
     path('register/<int:activite_id>/', views.inscription_activite, name='inscription_activite'),
     path('create/', views.creer_activite, name='creer_activite'),
     path('accounts/', include('django.contrib.auth.urls')), 
-    path('activity/<int:activite_id>/registrations/', views.inscription_activite_list, name='inscription_activite_list'),
-    path('activity/<int:activite_id>/delete/', views.supprimer_activite, name='supprimer_activite'),
-   
+    path('activites/<int:activite_id>/inscriptions/', views.inscription_activite_list, name='inscription_activite_list'),
+    path('activites/<int:activite_id>/supprimer/', views.supprimer_activite, name='supprimer_activite'),
+    path('api/', include('api.urls')),
 ]
