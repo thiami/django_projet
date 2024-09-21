@@ -1,18 +1,5 @@
 FROM python:latest
 
+WORKDIR /api
 
-# Définir le répertoire de travail
-WORKDIR /monappli
-
-# Copier les fichiers requirements.txt et l'installer
-COPY requirement.txt .
-
-# Installer les dépendances Python
-RUN pip install --no-cache-dir -r requirement.txt
-
-# Copier le reste du projet dans le conteneur
-COPY . .
-
-
-# Commande pour démarrer le serveur Django
-CMD ["python", "myproject/manage.py", "runserver", "0.0.0.0:8000"]
+RUN pip install psycopg2>=2.9 djangorestframework>=3.13 Django>=5.0

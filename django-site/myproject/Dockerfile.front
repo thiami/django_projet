@@ -1,13 +1,5 @@
 FROM python:latest
 
-# mon répertoire de travail
-WORKDIR /monappli
+WORKDIR /frontend
 
-# Copie des fichiers nécessaires
-COPY requirement.txt .
-RUN pip install -r requirement.txt
-
-# Copier du projet
-COPY . .
-#lancement serveur
-CMD ["python", "myproject/manage.py", "runserver", "0.0.0.0:8000"]
+RUN pip install Django>=5.0 psycopg2>=2.9 djangorestframework>=3.13

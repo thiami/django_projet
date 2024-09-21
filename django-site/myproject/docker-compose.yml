@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile.api
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/monappli
+       - .:/api
     depends_on:
       - baseD
     networks:
@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile.front
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/monappli
+      - .:/frontend
     depends_on:
       - baseD
     networks:
