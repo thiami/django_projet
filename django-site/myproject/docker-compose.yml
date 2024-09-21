@@ -1,0 +1,49 @@
+# Créez ici votre docker compose
+version: '3'
+
+services:
+  baseD:
+    image: postgres
+    environment:
+      POSTGRES_DB: ma_base
+      POSTGRES_USER: ibra
+      POSTGRES_PASSWORD: ibra
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:  
+      context: .
+      dockerfile: Dockerfile.api
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/monappli
+    depends_on:
+      - baseD
+    ports:
+      - "8001:8000"
+
+  public:
+    build:  
+      context: .
+      dockerfile: Dockerfile.front
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/monappli
+    depends_on:
+      - baseD
+    ports:
+      - "8000:8000"
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf 
+    ports:
+      - "80:80"
+    depends_on:
+      - api
+      - public
+
+volumes:
+  postgres_data:
