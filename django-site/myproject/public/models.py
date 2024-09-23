@@ -8,8 +8,7 @@ class Ville(models.Model):
         return self.nom
 
 class TypeActivite(models.Model):
-    type = models.CharField(max_length=100, null=True, blank=True)   # Assurez-vous que ce champ existe
-    
+    type = models.CharField(max_length=100, null=True, blank=True) 
     def __str__(self):
         return self.type
 

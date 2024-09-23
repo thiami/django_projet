@@ -3,6 +3,8 @@ from .models import Activite, Ville, TypeActivite, Registration
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.http import JsonResponse
+import requests
 def index(request):
     return render(request, 'index.html')
 
@@ -74,22 +76,12 @@ def creer_activite(request):
 
 def inscription_activite_list(request, activite_id):
     activite = get_object_or_404(Activite, id=activite_id)
-
-    
-    if request.user != activite.createur:
-        messages.error(request, "Vous n'avez pas la permission de voir cette liste.")
-        return redirect('activite_list')
-
     registrations = Registration.objects.filter(activity=activite)
+
     return render(request, 'inscription_activite_list.html', {'activite': activite, 'registrations': registrations})
 
 def supprimer_activite(request, activite_id):
     activite = get_object_or_404(Activite, id=activite_id)
-
-    
-    if request.user != activite.createur:
-        messages.error(request, "Vous n'avez pas la permission de supprimer cette activité.")
-        return redirect('activite_list')
 
     if request.method == "POST":
         activite.delete()
@@ -97,3 +89,19 @@ def supprimer_activite(request, activite_id):
         return redirect('activite_list')
 
     return render(request, 'supprimer_activite.html', {'activite': activite})
+
+def requetes_api(request):
+    
+        response = requests.get('http://api:8000/api/')  # Effectue une requête à l'API des activités
+        
+        if response.status_code == 200:
+            try:
+                data = response.json()  # Tente de convertir la réponse en JSON
+            except ValueError:
+                data = {'error': 'Erreur de parsing JSON'}
+        else:
+            data = {'error': 'Impossible de récupérer les activités'}
+
+        return JsonResponse(data, safe=False)  # Retourne les données JSON
+
+   
