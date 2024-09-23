@@ -92,16 +92,16 @@ def supprimer_activite(request, activite_id):
 
 def requetes_api(request):
     
-        response = requests.get('http://api:8000/api/')  # Effectue une requête à l'API des activités
+        response = requests.get('http://api:8000/api/') 
         
         if response.status_code == 200:
             try:
-                data = response.json()  # Tente de convertir la réponse en JSON
+                data = response.json()  
             except ValueError:
                 data = {'error': 'Erreur de parsing JSON'}
         else:
             data = {'error': 'Impossible de récupérer les activités'}
 
-        return JsonResponse(data, safe=False)  # Retourne les données JSON
+        return JsonResponse(data, safe=False)  
 
    

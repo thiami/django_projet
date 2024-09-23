@@ -2,7 +2,7 @@ from rest_framework import serializers
 from public.models import Activite, Registration
 
 class ActiviteSerializer(serializers.ModelSerializer):
-    ville = serializers.StringRelatedField()  # Utilise le nom de la ville 
+    ville = serializers.StringRelatedField()  
     type = serializers.StringRelatedField()  
     createur = serializers.StringRelatedField()  
 
