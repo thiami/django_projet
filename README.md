@@ -109,3 +109,100 @@ kubectl version --client
 Si la dernière commande vous affiche la version de kubectl, c'est qu'il est correctement installé.
 
 Et c'est parti !
+
+
+
+
+## REPONSE AUX QUETIONS :
+
+
+Réponse 1 : Pour afficher une page HTML, il faut d'abord créer une vue qui retourne cette page, laquelle sera définie dans le fichier `public/views.py`. Ensuite, il est nécessaire de configurer le serveur pour que les requêtes à l'URL `http://localhost` pointent vers cette vue. Cette configuration se fait en ajoutant le chemin correspondant dans le fichier `public/urls.py`, puis en incluant ce fichier dans le fichier `urls.py` du projet principal.
+
+Réponse 2 : La configuration de la base de données se fait dans le fichier settings.py du projet Django dans la section DATABASES.
+
+Réponse 3 : On se sert du fichier `settings.py` pour configurer les paramètres du projet Django.
+
+Réponse 4 : python manage.py makemigrations
+La commande python manage.py makemigrations génère des fichiers de migration pour les modèles présents dans les applications définies. Elle crée un fichier de migration dans le répertoire migrations/ de chaque application, qui détaille les changements apportés aux modèles et à la base de données.
+
+python manage.py migrate
+Cette commande python manage.py migrate applique les migrations créées par makemigrations, en synchronisant la base de données avec les modèles définis dans le projet.
+
+**Fonctionnement de Docker :**
+
+Réponse 1 : Effet et syntaxe de commandes :
+
+        - FROM : elle définit l'image de base pour l'image qu'on veut créée
+                 exemple : From nginx:latest # (image:version)
+                 
+        - RUN : permet d'executer des commandes lors de la création de        l'image
+                exemple : RUN pip install Django>=5.0 
+                
+        - WORKDIR : Défit le repertoire de travail dans les container créés à partir de cette image
+                exemple : WORKDIR /mon_espace
+                
+        - EXPOSE : Elle documente le fait que le service à l'intérieur du conteneur attend des connexions sur un port spécifique.
+                   exemple : EXPOSE 80 # pour nginx 
+                
+        - CMD : c'est la commande à exécuter lors du démarrage du container.
+                exemple : CMD ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
+
+**Docker-compose :**
+
+Définition d'un service : Un service définit les composants individuels de l'application qui fonctionneront dans des conteneurs distincts.
+
+Effet des mentions : 
+
+```
+- ports: 
+    - "80:80" 
+               
+```
+
+Mappe le port 80 de l'hôte (machine) vers le port 80 du conteneur.
+
+```
+build:
+    context .
+    dockerfile: Dockerfile.api
+               
+```
+Spécifie que l'image doit être construite à partir du fichier Dockerfile.api situé dans le répertoire courant.
+
+```
+depends_on:
+    - web
+    - api
+               
+```
+Indique que ce service dépend des services web et api. Cela garantit que ces services sont démarrés avant celui-ci.
+
+
+```
+environment:
+    POSTGRES_DB: ${POSTGRES_DB}
+    POSTGRES_USER: ${POSTGRES_USER}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+               
+```
+Définit des variables d'environnement à l'intérieur du conteneur à partir des variables définies localement (POSTGRES_DB, POSTGRES_USER, etc.).
+
+
+**Une méthode pour définir des varibales d'environnement dans un conteneur :**
+
+    Avec la commande docker run, on peut définir des variables d'environnement avec l'option -e ou --env.
+    Exemple :  docker run -e APP_ENV=production -e DEBUG=false myapp
+    
+    
+**Communication entre conteneurs sans IP dans Docker:**
+Dans Docker, les conteneurs d'un même réseau peuvent communiquer entre eux par leurs noms de service.
+Dans le fichier nginx.conf du conteneur Nginx, on peut configurer un proxy vers le service web sans utiliser d'IP :
+```
+server {
+    location /web {
+        proxy_pass http://web:8000; 
+    }
+}
+
+               
+```
