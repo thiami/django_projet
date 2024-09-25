@@ -159,7 +159,7 @@ Effet des mentions :
                
 ```
 
-Mappe le port 80 de l'hôte (machine) vers le port 80 du conteneur.
+Mappe le port 80 de l'hôte vers le port 80 du conteneur.
 
 ```
 build:

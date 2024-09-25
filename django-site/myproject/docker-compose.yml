@@ -1,4 +1,4 @@
-version: '3'
+#version: '3'
 
 services:
   baseD:
@@ -8,7 +8,8 @@ services:
       POSTGRES_USER: ibra
       POSTGRES_PASSWORD: ibra
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data3:/var/lib/postgresql/data
+      - ./ma_base_dump.sql:/docker-entrypoint-initdb.d/ma_base_dump.sql
     networks:
       - virtualReseauDocker
 
@@ -49,7 +50,7 @@ services:
       - virtualReseauDocker
 
 volumes:
-  postgres_data:
+  postgres_data3:
 
 networks:
   virtualReseauDocker:
